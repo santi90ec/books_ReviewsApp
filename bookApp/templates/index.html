@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/styleLogin.css' %}">
+    <title>User index</title>
+</head>
+<body>
+    <div class="container">
+        <div class="d-flex ">
+            <div class="p-1"><H1>Hola {{user.username}}</H1></div>
+
+        </div>
+        <div class="d-flex justify-content-end">
+            <div class="ml-auto p-2"><a href="/book/addBook">Add a Book Review</a></div>
+            <div class="ml-auto p-2"><a href="/logout">Logout</a></div>
+        </div>
+    </div>
+    <div class="d-inline-flex">
+        <div class="d-flex flex-column">
+            <div><h3>Recent Reviews</h3></div>
+            {% for review in lastReviews%}
+            <div>
+                <ul>
+                    <li>
+                        <a href="book/{{review.bookReview.id}}">{{review.bookReview.bookName}}</a>
+                        <ul>
+                            <li>Rating: <select name="rating" id="rating" disabled="disabled">
+                                    <option  value="{{review.rating}}" >
+                                        {% if review.rating == 1 %}1 estrellas{% endif %}
+                                        {% if review.rating == 2 %}2 estrellas{% endif %}
+                                        {% if review.rating == 3 %}3 estrellas{% endif %}
+                                        </option>
+                                </select>
+                            </li>
+                            <li>
+                                <a href="/user/{{review.userReview.id}}">{{review.userReview.username}}</a> : {{review.reviewDesc}}
+                            </li>
+                            <li>
+                                Fecha del Comentario : {{review.updatedAt}}
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="d-flex flex-column">
+            <div><h3>Available Books</h3></div>
+            <div class="continer">
+                {% for book in books %}
+                <ul>
+                    <li>
+                        <a href="book/{{book.id}}">{{book.bookName}}</a>
+                    </li>
+                </ul>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</body>
+<footer>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</footer>
+</html>
